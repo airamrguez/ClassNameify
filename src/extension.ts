@@ -73,7 +73,7 @@ function getNewClassNameProp(propTextRange: Range): string {
   if (!className) {
     throw new Error('could not parse class prop');
   }
-  return `className={classNames('${className}')}`;
+  return `className={classNames('${stripAllClasses(className)}')}`;
 }
 
 function getCurrentLineNumber(): number {
@@ -123,4 +123,8 @@ function getDocument(): TextDocument {
 
 function getSelection(): Selection {
   return getActiveEditor().selection;
+}
+
+function stripAllClasses(className: string) {
+  return className.split(/\s/).map(c => `"${c}"`).join(", ");
 }
